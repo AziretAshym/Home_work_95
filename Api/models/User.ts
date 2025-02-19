@@ -21,24 +21,12 @@ const UserSchema = new Schema<HydratedDocument<UserFields>, UserModel, UserMetho
         unique: true,
         validate: {
             validator: async function (this: HydratedDocument<UserFields>, value: string): Promise<boolean> {
-                if (!this.isModified('username')) return true;
-                const existUser: UserFields | null = await User.findOne({username: value});
+                if (!this.isModified('email')) return true;
+                const existUser: UserFields | null = await User.findOne({email: value});
                 return !existUser;
             },
             message: "Username already exists"
         },
-    },
-    displayName: {
-        type: String,
-        required: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    avatar: {
-        type: String,
-        required: true,
     },
     role: {
         type: String,
@@ -46,11 +34,20 @@ const UserSchema = new Schema<HydratedDocument<UserFields>, UserModel, UserMetho
         default: "user",
         required: true,
     },
-
+    password: {
+        type: String,
+        required: true,
+    },
     token: {
         type: String,
         required: true,
     },
+    displayName: {
+        type: String,
+        required: true,
+    },
+    avatar: String,
+    googleId: String,
 });
 
 UserSchema.pre("save", async function (next) {

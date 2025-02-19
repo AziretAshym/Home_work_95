@@ -3,8 +3,57 @@ import mongoose from "mongoose";
 import User from "../models/User";
 import auth, {RequestWithUser} from "../middleware/auth";
 import {imagesUpload} from "../multer";
+import config from "../config";
+import {OAuth2Client} from "google-auth-library";
 
 const usersRouter = express.Router();
+const client = new OAuth2Client(config.google.clientId);
+
+usersRouter.post("/google", async (req, res, next) => {
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken: req.body.credential,
+            audience: config.google.clientId,
+        });
+
+        const payload = ticket.getPayload();
+
+        if (!payload) {
+            res.status(400).send({ error: "Invalid credentials. Google login error." });
+            return;
+        }
+
+        const email = payload.email;
+        const id = payload.sub;
+        const displayName = payload.name;
+        const avatar = payload.picture || "";
+
+        if (!email) {
+            res.status(400).send({ error: "Not enough user data to continue." });
+            return;
+        }
+
+        let user = await User.findOne({ googleId: id });
+
+        if (!user) {
+            user = new User({
+                email: email,
+                password: crypto.randomUUID(),
+                googleId: id,
+                displayName,
+                avatar,
+            });
+        }
+
+        user.generateToken();
+        await user.save();
+
+        res.send({ message: "Login successfully.", user });
+    } catch (e) {
+        next(e);
+    }
+});
+
 
 usersRouter.post('/register', imagesUpload.single('avatar'), async (req, res, next) => {
     const existingUser = await User.findOne({ email: req.body.email });

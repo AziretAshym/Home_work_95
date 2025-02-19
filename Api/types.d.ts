@@ -5,6 +5,7 @@ export interface UserFields {
     avatar: string;
     role: string;
     token: string;
+    googleId: string;
 }
 
 export interface User {
