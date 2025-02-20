@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ICocktail, GlobalError } from "../../types";
-import { createCocktail, fetchCocktails } from './cocktailThunks.ts';
+import { createCocktail, fetchCocktails, fetchOneCocktail } from './cocktailThunks.ts';
 
 interface CocktailsState {
   cocktails: ICocktail[];
+  oneCocktail: ICocktail | null;
   loading: boolean;
   error: GlobalError | null;
 }
 
 const initialState: CocktailsState = {
   cocktails: [],
+  oneCocktail: null,
   loading: false,
   error: null,
 };
@@ -31,6 +33,19 @@ const cocktailsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message ? { error: action.error.message } : null;
       })
+
+      .addCase(fetchOneCocktail.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchOneCocktail.fulfilled, (state, action) => {
+        state.loading = false;
+        state.oneCocktail = action.payload;
+      })
+      .addCase(fetchOneCocktail.rejected, (state, action) => {
+        state.error = action.error.message ? { error: action.error.message } : null;
+      })
+
       .addCase(createCocktail.pending, (state) => {
         state.loading = true;
         state.error = null;

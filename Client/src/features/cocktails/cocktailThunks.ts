@@ -11,6 +11,13 @@ export const fetchCocktails = createAsyncThunk<ICocktail[]>(
   }
 );
 
+export const fetchOneCocktail = createAsyncThunk<ICocktail, string>(
+  "cocktails/fetchOneCocktail",
+  async (id) => {
+    const response = await axiosApi.get(`/cocktails/${id}`);
+    return response.data;
+  }
+);
 
 export const createCocktail = createAsyncThunk<void, CocktailMutation, { state: RootState }>(
   "cocktails/addNewCocktail",
