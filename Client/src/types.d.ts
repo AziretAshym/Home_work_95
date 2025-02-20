@@ -45,7 +45,7 @@ export interface ICocktail {
   _id: string;
   user: User;
   title: string;
-  image: File;
+  image: string;
   recipe: string;
   ingredients: [
     {

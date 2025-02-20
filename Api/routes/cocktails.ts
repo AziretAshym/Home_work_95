@@ -10,7 +10,7 @@ const cocktailsRouter = express.Router();
 
 cocktailsRouter.get('/', async (_req, res, next) => {
     try {
-        const cocktails = await Cocktail.find();
+        const cocktails = await Cocktail.find().populate('user');
         res.send(cocktails);
     } catch (e) {
         next(e)
