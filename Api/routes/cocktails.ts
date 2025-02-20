@@ -42,15 +42,7 @@ cocktailsRouter.post('/add-new-cocktail', imagesUpload.single('image'), async (r
         return;
     }
 
-    let ingredients = [];
-    if (req.body.ingredients) {
-        if (Array.isArray(req.body.ingredients)) {
-            ingredients = req.body.ingredients;
-        } else {
-            res.status(400).send({ error: 'Ingredients should be an array' });
-            return;
-        }
-    }
+    const ingredients = JSON.parse(req.body.ingredients);
 
     const newCocktail = new Cocktail({
         user: user._id,
@@ -67,6 +59,7 @@ cocktailsRouter.post('/add-new-cocktail', imagesUpload.single('image'), async (r
         next(e);
     }
 });
+
 
 cocktailsRouter.patch("/:id/togglePublished", auth, permit('admin'), async (req, res, next) => {
     const cocktailId = req.params.id;
