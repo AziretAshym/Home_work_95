@@ -31,12 +31,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
   }
 
 
-  const userAvatar = (() => {
-    if (typeof user.avatar === "string") {
-      return user.avatar.startsWith("images/") ? `${apiUrl}/${user.avatar}` : user.avatar;
-    }
-    return undefined;
-  })();
+  const userAvatar = user.avatar ? `${apiUrl}/${user.avatar}` : '';
 
   return (
     <>
@@ -65,6 +60,12 @@ const UserMenu: React.FC<Props> = ({user}) => {
           >
             My cocktails
           </MenuItem>
+          <MenuItem
+            onClick={() => {
+              navigate('/cocktails/add-new-cocktail');
+              setAnchorEl(null);
+            }}
+          >Add new cocktail</MenuItem>
           <MenuItem onClick={handleLogOut}>Log out</MenuItem>
         </Menu>
       </Box>

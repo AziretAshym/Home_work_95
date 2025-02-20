@@ -19,6 +19,8 @@
     "@mui/styled-engine-sc": "^6.4.3",
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.5.1",
+    "@tinymce/tinymce-react": "^5.1.1",
+    "@types/tinymce": "^4.6.9",
     "axios": "^1.7.9",
     "prettier": "^3.5.1",
     "react": "^19.0.0",

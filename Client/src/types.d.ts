@@ -47,11 +47,20 @@ export interface ICocktail {
   title: string;
   image: string;
   recipe: string;
-  ingredients: [
-    {
+  ingredients: {
       name: string;
       amount: string;
-    }
-  ],
+  }[],
+  isPublished: boolean;
+}
+
+export interface CocktailMutation {
+  title: string;
+  image: File | null;
+  recipe: string;
+  ingredients: {
+      name: string;
+      amount: string;
+    }[],
   isPublished: boolean;
 }

@@ -1,9 +1,10 @@
 import AppToolbar from './components/Toolbar/Toolbar.tsx';
-import { Container, CssBaseline } from '@mui/material';
+import { Container, CssBaseline, Typography } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import LoginPage from './features/users/containers/LoginPage.tsx';
 import RegisterPage from './features/users/containers/RegisterPage.tsx';
 import Cocktails from './features/cocktails/containers/Cocktails.tsx';
+import CocktailForm from './features/cocktails/components/CocktailForm.tsx';
 
 const App = () => {
   return (
@@ -16,8 +17,15 @@ const App = () => {
         <Container>
           <Routes>
             <Route path="/" element={<Cocktails />} />
+            <Route path="/cocktails/add-new-cocktail" element={<CocktailForm />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/*" element={
+              <Typography
+                variant={"h3"}
+                textAlign="center"
+              >Not Found</Typography>
+              } />
           </Routes>
         </Container>
       </main>

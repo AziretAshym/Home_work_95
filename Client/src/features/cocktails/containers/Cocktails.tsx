@@ -1,5 +1,5 @@
 import { Box, CircularProgress } from '@mui/material';
-import { fetchCocktails } from '../coctailThunks.ts';
+import { fetchCocktails } from '../cocktailThunks.ts';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 import OneCocktail from '../components/OneCocktail.tsx';
