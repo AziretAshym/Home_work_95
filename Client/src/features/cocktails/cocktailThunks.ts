@@ -45,3 +45,47 @@ export const createCocktail = createAsyncThunk<void, CocktailMutation, { state: 
     });
   }
 );
+
+export const deleteCocktail = createAsyncThunk<void, string, { state: RootState }>(
+  "cocktails/deleteCocktail",
+  async (cocktailId, { getState }) => {
+    const token = getState().users.user?.token;
+
+    if (!token) {
+      console.error("No token found");
+      return;
+    }
+
+    try {
+      await axiosApi.delete(`/cocktails/${cocktailId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+    } catch (e) {
+      console.error("Error deleting cocktail:", e);
+      throw e;
+    }
+  }
+);
+
+export const publishCocktail = createAsyncThunk<void, string, { state: RootState }>(
+  "cocktails/publishCocktail",
+  async (cocktailId, { getState }) => {
+    const token = getState().users.user?.token;
+
+    if (!token) {
+      console.error("No token found");
+      return;
+    }
+
+    try {
+      await axiosApi.patch(`/cocktails/${cocktailId}/togglePublished`, null, {
+        headers: { Authorization: token },
+      });
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+);

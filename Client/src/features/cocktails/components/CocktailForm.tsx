@@ -23,7 +23,7 @@ const CocktailForm = () => {
   const { loading } = useAppSelector((state) => state.cocktails);
   const navigate = useNavigate();
 
-  const submitFormHandler = (e: FormEvent) => {
+  const submitFormHandler = async (e: FormEvent) => {
     e.preventDefault();
 
     if (
@@ -39,13 +39,13 @@ const CocktailForm = () => {
     }
 
 
-    dispatch(createCocktail({
+    await dispatch(createCocktail({
       ...form,
       ingredients: ingredients.filter(ing => ing.name && ing.amount),
     }));
     navigate('/');
     toast.success('Cocktail created successfully.');
-    dispatch(fetchCocktails());
+    await dispatch(fetchCocktails());
   };
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

@@ -17,7 +17,7 @@ const run = async () => {
 
     const [barman_1, barman_2] = await User.create(
         {
-            email: "qwerty@gamil.com",
+            email: "qwerty@gmail.com",
             displayName: "Qwerty",
             password: "qwerty",
             avatar: "fixtures/barman1.jpeg",
@@ -61,7 +61,8 @@ const run = async () => {
                     name: "Glacé cherries",
                     amount: "Optional",
                 },
-            ]
+            ],
+            isPublished: true,
         },
         {
             user: barman_1,
@@ -145,7 +146,8 @@ const run = async () => {
                     name: "Sparkling wine",
                     amount: "2 ounce",
                 },
-            ]
+            ],
+            isPublished: true,
         },
     )
     await mongoose.disconnect();

@@ -7,7 +7,7 @@ import OneCocktail from '../components/OneCocktail.tsx';
 const Cocktails = () => {
   const dispatch = useAppDispatch();
   const { cocktails, loading } = useAppSelector((state) => state.cocktails);
-
+  const user = useAppSelector((state) => state.users.user);
   useEffect(() => {
     dispatch(fetchCocktails());
   }, [dispatch]);
@@ -23,7 +23,10 @@ const Cocktails = () => {
         {loading ? (
           <CircularProgress />
         ) : (
-          cocktails.map((cocktail) => (
+          cocktails.filter((cocktail) => {
+            if (user?.role === 'admin') return true;
+            return cocktail.isPublished === true;
+          }).map((cocktail) => (
             <OneCocktail
               key={cocktail._id}
               id={cocktail._id}
