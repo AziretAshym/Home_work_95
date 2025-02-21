@@ -16,10 +16,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { register } from "../usersThunks.ts";
 import FileInput from "../../../components/FileInput/FileInput.tsx";
 
+const regEmail = /^(\w+[-.]?\w+)@(\w+)([.-]?\w+)?(\.[a-zA-Z]{2,3})$/;
+
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
   const registerError = useAppSelector(selectRegisterError);
   const navigate = useNavigate();
+  const [errors, setErrors] = useState<{email?: string}>({});
 
   const [form, setForm] = useState<RegisterMutation>({
     email: "",
@@ -31,6 +34,14 @@ const RegisterPage = () => {
   const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+
+    if (name === 'email') {
+      if (regEmail.test(value)) {
+        setErrors(prevState => ({...prevState, email: ''}));
+      } else {
+        setErrors(prevState => ({...prevState, email: 'Invalid email format'}));
+      }
+    }
   };
 
   const fileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,8 +91,8 @@ const RegisterPage = () => {
                 name="email"
                 value={form.email}
                 onChange={inputChange}
-                error={Boolean(getFieldError("email"))}
-                helperText={getFieldError("email")}
+                error={Boolean(getFieldError('email')) || Boolean(errors.email)}
+                helperText={getFieldError('email') || errors.email}
               />
             </Grid>
             <Grid>
