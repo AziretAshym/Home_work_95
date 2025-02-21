@@ -25,13 +25,27 @@ const CocktailForm = () => {
 
   const submitFormHandler = (e: FormEvent) => {
     e.preventDefault();
+
+    if (
+      !form.title ||
+      ingredients.length === 0 ||
+      !form.recipe ||
+      !form.image ||
+      ingredients[0].name.length === 0 ||
+      ingredients[0].amount.length === 0
+    ) {
+      toast.warn('All fields are required!');
+      return;
+    }
+
+
     dispatch(createCocktail({
       ...form,
       ingredients: ingredients.filter(ing => ing.name && ing.amount),
     }));
     navigate('/');
-    dispatch(fetchCocktails());
     toast.success('Cocktail created successfully.');
+    dispatch(fetchCocktails());
   };
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

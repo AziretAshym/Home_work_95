@@ -54,7 +54,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
         >
           <MenuItem
             onClick={() => {
-              navigate('/');
+              navigate('/cocktails/my-cocktails');
               setAnchorEl(null);
             }}
           >

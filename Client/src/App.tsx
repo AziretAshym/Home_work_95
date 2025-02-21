@@ -6,6 +6,7 @@ import RegisterPage from './features/users/containers/RegisterPage.tsx';
 import Cocktails from './features/cocktails/containers/Cocktails.tsx';
 import CocktailForm from './features/cocktails/components/CocktailForm.tsx';
 import CocktailDetails from './features/cocktails/containers/CocktailDetails.tsx';
+import MyCocktails from './features/cocktails/containers/MyCocktails.tsx';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Cocktails />} />
             <Route path="/cocktails/:id" element={<CocktailDetails />} />
+            <Route path="/cocktails/my-cocktails" element={<MyCocktails />} />
             <Route path="/cocktails/add-new-cocktail" element={<CocktailForm />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
