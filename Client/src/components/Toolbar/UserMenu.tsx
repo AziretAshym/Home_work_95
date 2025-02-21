@@ -6,6 +6,8 @@ import { unsetUser } from "../../features/users/usersSlice.ts";
 import { logout } from "../../features/users/usersThunks.ts";
 import { NavLink, useNavigate } from "react-router-dom";
 import { apiUrl } from "../../globalConstants.ts";
+import logo from "../../assets/logo.png";
+
 
 interface Props {
   user: User;
@@ -38,11 +40,17 @@ const UserMenu: React.FC<Props> = ({ user }) => {
         variant="h3"
         component={NavLink}
         to="/"
-        sx={{ textDecoration: "none", color: "inherit" }}
+        sx={{
+          textDecoration: 'none',
+          color: 'inherit',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px'
+      }}
       >
-        Drinks
+        <img src={logo} alt="logo" style={{height: '40px', width: 'auto'}}/> Cocktail Craft
       </Typography>
-      <Box display={"flex"} alignItems={"center"} gap={"10px"}>
+      <Box display={'flex'} alignItems={'center'} gap={'10px'}>
         <Avatar alt={user.displayName} src={userAvatar} />
         <Button onClick={handleClick} color="inherit">
           {user.displayName}

@@ -65,18 +65,35 @@ const CocktailDetails = () => {
       {loading ? (
         <CircularProgress />
       ) : (
-        <>
-          <Card sx={{ display: "flex", gap: 1, padding: 4 }}>
+        <Box display="flex" justifyContent="center" mt={4}>
+          <Card
+            sx={{
+              display: "flex",
+              gap: 3,
+              padding: 3,
+              background: "linear-gradient(135deg, #fff8e1, #ffe0b2)",
+              boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
+              borderRadius: "18px",
+              maxWidth: "800px",
+              width: "100%",
+              color: "#5d4037",
+            }}
+          >
             <Box>
               <CardMedia
                 component="img"
                 image={`${apiUrl}/${oneCocktail.image}`}
                 alt={oneCocktail.title}
-                sx={{ width: "300px", borderRadius: "18px", marginBottom: 2 }}
+                sx={{
+                  width: "300px",
+                  borderRadius: "12px",
+                  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
+                  marginBottom: 2,
+                }}
               />
               {user?.role === "admin" ? (
                 oneCocktail.isPublished ? (
-                  <Typography sx={{ color: "olivedrab", marginBottom: 1 }}>
+                  <Typography sx={{ color: "green", marginBottom: 1 }}>
                     The cocktail is published
                   </Typography>
                 ) : (
@@ -101,7 +118,13 @@ const CocktailDetails = () => {
                     {oneCocktail.isPublished ? "Unpublish" : "Publish"}
                   </Button>
                   <IconButton
-                    sx={{ backgroundColor: "error.main", color: "#fff" }}
+                    sx={{
+                      backgroundColor: "error.main",
+                      color: "#fff",
+                      "&:hover": {
+                        backgroundColor: "error.dark",
+                      },
+                    }}
                     onClick={handleDelete}
                     disabled={loading}
                   >
@@ -111,29 +134,31 @@ const CocktailDetails = () => {
               )}
             </Box>
             <CardContent>
-              <Box>
-                <Typography variant="h3" marginBottom="30px">
-                  {oneCocktail.title}
-                </Typography>
-                <Typography variant="h6">Ingredients:</Typography>
-                <List>
-                  {oneCocktail.ingredients.map((ingredient, index) => (
-                    <ListItem key={index}>
-                      <ListItemIcon>
-                        <LocalBar sx={{ color: "red" }} />
-                      </ListItemIcon>
-                      <ListItemText>
-                        {ingredient.name} - {ingredient.amount}
-                      </ListItemText>
-                    </ListItem>
-                  ))}
-                </List>
-                <Typography variant="h6">Recipe:</Typography>
-                <Typography>{oneCocktail.recipe}</Typography>
-              </Box>
+              <Typography variant="h3" marginBottom="20px">
+                {oneCocktail.title}
+              </Typography>
+              <Typography variant="h6" fontWeight="bold">
+                Ingredients:
+              </Typography>
+              <List>
+                {oneCocktail.ingredients.map((ingredient, index) => (
+                  <ListItem key={index}>
+                    <ListItemIcon>
+                      <LocalBar sx={{ color: "#d84315" }} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      {ingredient.name} - {ingredient.amount}
+                    </ListItemText>
+                  </ListItem>
+                ))}
+              </List>
+              <Typography variant="h6" fontWeight="bold" mt={2}>
+                Recipe:
+              </Typography>
+              <Typography>{oneCocktail.recipe}</Typography>
             </CardContent>
           </Card>
-        </>
+        </Box>
       )}
     </>
   );
