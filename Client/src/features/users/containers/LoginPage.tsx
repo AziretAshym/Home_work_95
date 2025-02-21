@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
-import { RegisterMutation } from '../../../types';
-import { Alert, Avatar, Box, Button, Container, TextField, Typography } from '@mui/material';
-import Grid from '@mui/material/Grid2';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
-import { selectLoginError } from '../usersSlice.ts';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { googleLogin, login } from '../usersThunks.ts';
-import { LockOpenOutlined } from '@mui/icons-material';
-import { GoogleLogin } from '@react-oauth/google';
-
+import React, { useState } from "react";
+import { RegisterMutation } from "../../../types";
+import {
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+} from "@mui/material";
+import Grid from "@mui/material/Grid2";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
+import { selectLoginError } from "../usersSlice.ts";
+import { NavLink, useNavigate } from "react-router-dom";
+import { googleLogin, login } from "../usersThunks.ts";
+import { LockOpenOutlined } from "@mui/icons-material";
+import { GoogleLogin } from "@react-oauth/google";
 
 const LoginPage = () => {
-
   const dispatch = useAppDispatch();
   const loginError = useAppSelector(selectLoginError);
   const navigate = useNavigate();
 
   const [form, setForm] = useState<RegisterMutation>({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
@@ -31,15 +37,15 @@ const LoginPage = () => {
 
     try {
       await dispatch(login(form)).unwrap();
-      navigate('/');
+      navigate("/");
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   };
 
   const googleLoginHandler = async (credential: string) => {
     await dispatch(googleLogin(credential)).unwrap();
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -48,30 +54,31 @@ const LoginPage = () => {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOpenOutlined />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
           {loginError && (
-           <Alert severity="error" sx={{mt: 3, width: "100%"}}>
-             {loginError.error}
-           </Alert>
+            <Alert severity="error" sx={{ mt: 3, width: "100%" }}>
+              {loginError.error}
+            </Alert>
           )}
-          <Box sx={{pt: 2}}>
+          <Box sx={{ pt: 2 }}>
             <GoogleLogin
-              onSuccess={(credentialResponse => {
+              onSuccess={(credentialResponse) => {
                 if (credentialResponse.credential) {
                   void googleLoginHandler(credentialResponse.credential);
                 }
-              })}
-              onError={() => <Alert severity="error">Login failed</Alert>}/>
+              }}
+              onError={() => <Alert severity="error">Login failed</Alert>}
+            />
           </Box>
           <Box component="form" noValidate onSubmit={submit} sx={{ mt: 3 }}>
             <Grid container direction={"column"} size={12} spacing={2}>
@@ -83,7 +90,6 @@ const LoginPage = () => {
                   name="email"
                   value={form.email}
                   onChange={inputChange}
-
                 />
               </Grid>
               <Grid>

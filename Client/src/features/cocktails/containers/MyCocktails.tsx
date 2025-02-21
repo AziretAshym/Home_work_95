@@ -1,8 +1,8 @@
-import { Box, CircularProgress } from '@mui/material';
-import { fetchCocktails } from '../cocktailThunks.ts';
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
-import OneCocktail from '../components/OneCocktail.tsx';
+import { Box, CircularProgress } from "@mui/material";
+import { fetchCocktails } from "../cocktailThunks.ts";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
+import OneCocktail from "../components/OneCocktail.tsx";
 
 const MyCocktails = () => {
   const dispatch = useAppDispatch();
@@ -13,14 +13,16 @@ const MyCocktails = () => {
     dispatch(fetchCocktails());
   }, [dispatch]);
 
-  const userCocktails = cocktails.filter(cocktail => cocktail.user?._id === user?._id);
+  const userCocktails = cocktails.filter(
+    (cocktail) => cocktail.user?._id === user?._id,
+  );
 
   return (
     <Box
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
+        display: "flex",
+        justifyContent: "center",
+        flexWrap: "wrap",
         gap: 3,
       }}
     >

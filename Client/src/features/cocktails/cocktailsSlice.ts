@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ICocktail, GlobalError } from "../../types";
-import { createCocktail, deleteCocktail, fetchCocktails, fetchOneCocktail, publishCocktail } from './cocktailThunks.ts';
+import {
+  createCocktail,
+  deleteCocktail,
+  fetchCocktails,
+  fetchOneCocktail,
+  publishCocktail,
+} from "./cocktailThunks.ts";
 
 interface CocktailsState {
   cocktails: ICocktail[];
@@ -23,15 +29,17 @@ const cocktailsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCocktails.pending, (state) => {
-      state.loading = true;
+        state.loading = true;
       })
       .addCase(fetchCocktails.fulfilled, (state, action) => {
-      state.loading = false;
-      state.cocktails = action.payload;
+        state.loading = false;
+        state.cocktails = action.payload;
       })
       .addCase(fetchCocktails.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message ? { error: action.error.message } : null;
+        state.error = action.error.message
+          ? { error: action.error.message }
+          : null;
       })
 
       .addCase(fetchOneCocktail.pending, (state) => {
@@ -43,7 +51,9 @@ const cocktailsSlice = createSlice({
         state.oneCocktail = action.payload;
       })
       .addCase(fetchOneCocktail.rejected, (state, action) => {
-        state.error = action.error.message ? { error: action.error.message } : null;
+        state.error = action.error.message
+          ? { error: action.error.message }
+          : null;
       })
 
       .addCase(createCocktail.pending, (state) => {
@@ -55,7 +65,9 @@ const cocktailsSlice = createSlice({
       })
       .addCase(createCocktail.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message ? {error: action.error.message} : null;
+        state.error = action.error.message
+          ? { error: action.error.message }
+          : null;
       })
 
       .addCase(deleteCocktail.pending, (state) => {
@@ -67,7 +79,9 @@ const cocktailsSlice = createSlice({
       })
       .addCase(deleteCocktail.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message ? {error: action.error.message} : null;
+        state.error = action.error.message
+          ? { error: action.error.message }
+          : null;
       })
 
       .addCase(publishCocktail.pending, (state) => {
@@ -79,9 +93,11 @@ const cocktailsSlice = createSlice({
       })
       .addCase(publishCocktail.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message ? {error: action.error.message} : null;
+        state.error = action.error.message
+          ? { error: action.error.message }
+          : null;
       });
-  }
+  },
 });
 
 export const cocktailsReducer = cocktailsSlice.reducer;

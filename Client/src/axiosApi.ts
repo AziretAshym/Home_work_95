@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiUrl } from './globalConstants.ts';
+import { apiUrl } from "./globalConstants.ts";
 
 const axiosApi = axios.create({
   baseURL: apiUrl,

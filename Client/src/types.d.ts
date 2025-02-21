@@ -10,7 +10,6 @@ export interface LoginMutation {
   password: string;
 }
 
-
 export interface User {
   _id: string;
   email: string;
@@ -30,8 +29,8 @@ export interface ValidationError {
     [key: string]: {
       name: string;
       message: string;
-    }
-  },
+    };
+  };
   message: string;
   name: string;
   _message: string;
@@ -48,9 +47,9 @@ export interface ICocktail {
   image: string;
   recipe: string;
   ingredients: {
-      name: string;
-      amount: string;
-  }[],
+    name: string;
+    amount: string;
+  }[];
   isPublished: boolean;
 }
 
@@ -59,8 +58,8 @@ export interface CocktailMutation {
   image: File | null;
   recipe: string;
   ingredients: {
-      name: string;
-      amount: string;
-    }[],
+    name: string;
+    amount: string;
+  }[];
   isPublished: boolean;
 }

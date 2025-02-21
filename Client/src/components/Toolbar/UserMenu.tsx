@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { Avatar, Box, Button, Menu, MenuItem, Typography } from '@mui/material';
-import { User } from '../../types';
-import { useAppDispatch } from '../../app/hooks.ts';
-import { unsetUser } from '../../features/users/usersSlice.ts';
-import { logout } from '../../features/users/usersThunks.ts';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { apiUrl } from '../../globalConstants.ts';
+import React, { useState } from "react";
+import { Avatar, Box, Button, Menu, MenuItem, Typography } from "@mui/material";
+import { User } from "../../types";
+import { useAppDispatch } from "../../app/hooks.ts";
+import { unsetUser } from "../../features/users/usersSlice.ts";
+import { logout } from "../../features/users/usersThunks.ts";
+import { NavLink, useNavigate } from "react-router-dom";
+import { apiUrl } from "../../globalConstants.ts";
 
 interface Props {
   user: User;
 }
 
-const UserMenu: React.FC<Props> = ({user}) => {
+const UserMenu: React.FC<Props> = ({ user }) => {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
@@ -22,28 +22,29 @@ const UserMenu: React.FC<Props> = ({user}) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
 
   const handleLogOut = () => {
     dispatch(logout());
     dispatch(unsetUser());
-    navigate('/login');
-  }
+    navigate("/login");
+  };
 
-
-  const userAvatar = user.avatar ? `${apiUrl}/${user.avatar}` : '';
+  const userAvatar = user.avatar ? `${apiUrl}/${user.avatar}` : "";
 
   return (
     <>
-      <Typography variant="h3" component={NavLink} to="/" sx={{textDecoration: 'none', color: 'inherit'}}>
+      <Typography
+        variant="h3"
+        component={NavLink}
+        to="/"
+        sx={{ textDecoration: "none", color: "inherit" }}
+      >
         Drinks
       </Typography>
       <Box display={"flex"} alignItems={"center"} gap={"10px"}>
         <Avatar alt={user.displayName} src={userAvatar} />
-        <Button
-          onClick={handleClick}
-          color="inherit"
-        >
+        <Button onClick={handleClick} color="inherit">
           {user.displayName}
         </Button>
         <Menu
@@ -54,7 +55,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
         >
           <MenuItem
             onClick={() => {
-              navigate('/cocktails/my-cocktails');
+              navigate("/cocktails/my-cocktails");
               setAnchorEl(null);
             }}
           >
@@ -62,10 +63,12 @@ const UserMenu: React.FC<Props> = ({user}) => {
           </MenuItem>
           <MenuItem
             onClick={() => {
-              navigate('/cocktails/add-new-cocktail');
+              navigate("/cocktails/add-new-cocktail");
               setAnchorEl(null);
             }}
-          >Add new cocktail</MenuItem>
+          >
+            Add new cocktail
+          </MenuItem>
           <MenuItem onClick={handleLogOut}>Log out</MenuItem>
         </Menu>
       </Box>

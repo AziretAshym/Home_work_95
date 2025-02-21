@@ -1,12 +1,12 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import Grid from '@mui/material/Grid2';
-import { Button, CircularProgress, TextField, Typography } from '@mui/material';
-import { CocktailMutation } from '../../../types';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
-import { createCocktail, fetchCocktails } from '../cocktailThunks.ts';
-import FileInput from '../../../components/FileInput/FileInput.tsx';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { ChangeEvent, FormEvent, useState } from "react";
+import Grid from "@mui/material/Grid2";
+import { Button, CircularProgress, TextField, Typography } from "@mui/material";
+import { CocktailMutation } from "../../../types";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
+import { createCocktail, fetchCocktails } from "../cocktailThunks.ts";
+import FileInput from "../../../components/FileInput/FileInput.tsx";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const initialState: CocktailMutation = {
   title: "",
@@ -18,7 +18,9 @@ const initialState: CocktailMutation = {
 
 const CocktailForm = () => {
   const [form, setForm] = useState<CocktailMutation>(initialState);
-  const [ingredients, setIngredients] = useState<{ name: string; amount: string }[]>([]);
+  const [ingredients, setIngredients] = useState<
+    { name: string; amount: string }[]
+  >([]);
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector((state) => state.cocktails);
   const navigate = useNavigate();
@@ -34,17 +36,18 @@ const CocktailForm = () => {
       ingredients[0].name.length === 0 ||
       ingredients[0].amount.length === 0
     ) {
-      toast.warn('All fields are required!');
+      toast.warn("All fields are required!");
       return;
     }
 
-
-    await dispatch(createCocktail({
-      ...form,
-      ingredients: ingredients.filter(ing => ing.name && ing.amount),
-    }));
-    navigate('/');
-    toast.success('Cocktail created successfully.');
+    await dispatch(
+      createCocktail({
+        ...form,
+        ingredients: ingredients.filter((ing) => ing.name && ing.amount),
+      }),
+    );
+    navigate("/");
+    toast.success("Cocktail created successfully.");
     await dispatch(fetchCocktails());
   };
 
@@ -64,20 +67,21 @@ const CocktailForm = () => {
   };
 
   const addIngredient = () => {
-    if (ingredients.some(ing => !ing.name || !ing.amount)) return;
-    setIngredients((prev) => [...prev, { name: '', amount: '' }]);
+    if (ingredients.some((ing) => !ing.name || !ing.amount)) return;
+    setIngredients((prev) => [...prev, { name: "", amount: "" }]);
   };
 
   const deleteIngredient = (index: number) => {
     setIngredients(ingredients.filter((_ing, i) => i !== index));
   };
 
-  const onChangeIngredientsInputs = (i: number, e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onChangeIngredientsInputs = (
+    i: number,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { value, name } = e.target;
     setIngredients((prev) =>
-      prev.map((ing, index) =>
-        index === i ? { ...ing, [name]: value } : ing
-      )
+      prev.map((ing, index) => (index === i ? { ...ing, [name]: value } : ing)),
     );
   };
 
@@ -99,7 +103,12 @@ const CocktailForm = () => {
         <Grid>
           <Typography variant="h6">Ingredients</Typography>
           {ingredients.map((_ing, i) => (
-            <Grid container key={i} spacing={2} sx={{ alignItems: 'center', marginBottom: '10px'}}>
+            <Grid
+              container
+              key={i}
+              spacing={2}
+              sx={{ alignItems: "center", marginBottom: "10px" }}
+            >
               <Grid>
                 <TextField
                   name="name"
@@ -160,12 +169,8 @@ const CocktailForm = () => {
         </Grid>
 
         <Grid>
-          <Button
-            type="submit"
-            color="primary"
-            disabled={loading}
-          >
-            {loading ? <CircularProgress size={24} /> : 'Create'}
+          <Button type="submit" color="primary" disabled={loading}>
+            {loading ? <CircularProgress size={24} /> : "Create"}
           </Button>
         </Grid>
       </Grid>
